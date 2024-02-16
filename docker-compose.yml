@@ -24,7 +24,7 @@ services:
       - blog-network  
   nginx:
     image: nginx:alpine
-    container_name: nginx                 
+    container_name: nginx-blog                 
     restart: unless-stopped
     ports:
       - 8000:80
@@ -33,9 +33,9 @@ services:
       - ./docker-compose/nginx:/etc/nginx/conf.d/
     networks:
       - blog-network  
-  myadmin:
+  phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin-blog
     ports:
       - "8081:80"
     depends_on:
@@ -45,5 +45,5 @@ services:
     networks:
       - blog-network
 networks:
-  shab-network:
+  blog-network:
     driver: bridge
