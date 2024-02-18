@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: sina-micro        
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - micro-network 
+  db:
+    image: mysql:8.0
+    container_name: micro-db            
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: micro
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - micro-network  
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-micro                 
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - micro-network  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-micro
+    ports:
+      - "8081:80"
+    depends_on:
+        ['db']
+    links:
+        ['db:db']
+    networks:
+      - micro-network
+networks:
+  micro-network:
+    driver: bridge
