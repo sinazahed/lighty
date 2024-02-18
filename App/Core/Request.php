@@ -17,6 +17,11 @@ class Request
         $this->ip = $_SERVER['REMOTE_ADDR'];
     }
 
+    public function __get($key)
+    {
+        return $this->input($key);
+    }
+    // Class Apis
     public function getParams()
     {
         return $this->params;
@@ -35,5 +40,21 @@ class Request
     public function ip()
     {
         return $this->ip;
+    }
+    // End Class Api
+
+    public function input(string $key) : string
+    {
+        return $this->params[$key] ?? 'null';
+    }
+
+    public function exist(string $key) : bool
+    {
+        return isset($this->params[$key]);
+    }
+
+    public function redirect(string $route)
+    {
+        header("Location:" . site_url($route));
     }
 }
