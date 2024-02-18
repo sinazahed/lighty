@@ -5,6 +5,6 @@ class BaseController
 {
     public function index()
     {
-        echo "Hi sina";
+        view('welcome');
     }
 }
