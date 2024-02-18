@@ -8,7 +8,7 @@ class Route
     public static function add($method, $uri, $action=null)
     {
         $method = is_array($method) ? $method : [$method];
-        self::$routes[] = ['methods' => $method,'uri'=>$uri, 'action'=>$action];
+        self::$routes[] = ['methods' => array_map('strtoupper',$method),'uri'=>$uri, 'action'=>$action];
     }
 
     public static function get($uri,$action=null)
