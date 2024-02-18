@@ -1,5 +1,6 @@
 <?php
 
-include "vendor/autoload.php";
+include "bootstrap/Init.php";
+use App\Core\Request;
 
-$request = new App\Core\Request();
+$request= new Request();
