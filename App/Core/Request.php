@@ -7,6 +7,7 @@ class Request
     private $params;
     private $method;
     private $agent;
+    private $uri;
     private $ip;
 
     public function __construct()
@@ -15,8 +16,14 @@ class Request
         $this->agent = $_SERVER['HTTP_USER_AGENT'];
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->ip = $_SERVER['REMOTE_ADDR'];
+        $this->uri = $_SERVER['REQUEST_URI'];
     }
 
+    public function __get($key)
+    {
+        return $this->input($key);
+    }
+    // Class Apis
     public function getParams()
     {
         return $this->params;
@@ -24,7 +31,7 @@ class Request
 
     public function getMethod()
     {
-        return $this->method;
+        return (strtoupper($this->method));
     }
 
     public function getAgent()
@@ -32,8 +39,29 @@ class Request
         return $this->agent;
     }
 
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
     public function ip()
     {
         return $this->ip;
+    }
+    // End Class Api
+
+    public function input(string $key) : string
+    {
+        return $this->params[$key] ?? 'null';
+    }
+
+    public function exist(string $key) : bool
+    {
+        return isset($this->params[$key]);
+    }
+
+    public function redirect(string $route)
+    {
+        header("Location:" . site_url($route));
     }
 }

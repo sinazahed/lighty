@@ -1,9 +1,20 @@
 <?php
 
-function site_url($route){
+function siteUrl($route){
     return $_ENV['BASE_URL'] . $route;
 }
 
-function asset_url($route){
+function assetUrl($route){
     return site_url("assets/" . $route);
+}
+
+function notFound(){
+    header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+    view('errors.404');
+    die();
+}
+
+function view($path){
+    $path=str_replace('.', '/', $path);
+    include_once BASE_PATH . "views/$path.php";
 }
