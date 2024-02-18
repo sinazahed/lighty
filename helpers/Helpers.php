@@ -14,7 +14,8 @@ function notFound(){
     die();
 }
 
-function view($path){
+function view($path, $data=[]){
+    extract($data);
     $path=str_replace('.', '/', $path);
     include_once BASE_PATH . "views/$path.php";
 }

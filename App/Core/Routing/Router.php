@@ -41,6 +41,8 @@ class Router
         $method = $route[1];
         if(!class_exists($className))
             throw new \Exception("Class $className Not Exist");
+        if(!method_exists($className,$method))
+            throw new \Exception("Method $method Not Exist");
         $controller = new $className();
         $controller->$method();
     }
