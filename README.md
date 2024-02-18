@@ -1,2 +1,2 @@
-# Lighty : Small and fast microframework for php
+# Lighty PHP Framework
 simple and light microframework for php
