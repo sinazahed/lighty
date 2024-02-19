@@ -4,6 +4,7 @@ namespace App\Core;
 
 class Request
 {
+    private $routeParams=[];
     private $params;
     private $method;
     private $agent;
@@ -47,6 +48,21 @@ class Request
     public function ip()
     {
         return $this->ip;
+    }
+
+    public function setRouteParams($key, $value)
+    {
+        $this->routeParams[$key] = $value;
+    }
+
+    public function getRouteParam($key)
+    {
+        return $this->routeParams[$key];
+    }
+
+    public function getRouteParams($key)
+    {
+        return $this->routeParams;
     }
     // End Class Api
 

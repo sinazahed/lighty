@@ -24,7 +24,7 @@ class Router
         $this->run_middleware();
     }
 
-    private function run_middleware()
+    private function run_middleware() : void
     {
         $middlewares = $this->current_route['middleware'] ?? [];
         foreach($middlewares as $middleware){
@@ -36,14 +36,32 @@ class Router
     public function findRoute(Request $request) : array
     {
         foreach($this->routes as $route){
-            if(in_array($request->getMethod(), $route['methods']) && $request->getUri() == $route['uri']){
+            if(!in_array($request->getMethod(), $route['methods'])){
+                return [];
+            }
+            if($this->is_regex_match($route['uri'])){
                 return $route;
             }
         }
         return [];
     }
 
-    public function handle()
+    private function is_regex_match($route) : bool
+    {
+        global $request;
+        $pattern = "/^" . str_replace(['/','{','}'],['\/','(?<','>[-%\w]+)'],$route) ."$/";
+        if(!preg_match($pattern, $this->request->getUri(), $matches)){
+            return false;
+        }
+        foreach($matches as $key => $value){
+            if(!is_int($key)){
+                $request->setRouteParams($key, $value);
+            }
+        }
+        return true;
+    }
+
+    public function handle() : void
     {
         $route=$this->validator->validateRoute($this->current_route);
 
