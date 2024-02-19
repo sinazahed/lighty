@@ -71,7 +71,7 @@ class Router
             throw new \Exception("Class $className Not Exist");
         if(!method_exists($className,$method))
             throw new \Exception("Method $method Not Exist");
-        $controller = new $className();
+        $controller = new $className($this->request);
         $controller->$method();
     }
 }

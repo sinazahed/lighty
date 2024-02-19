@@ -4,11 +4,17 @@ use App\Core\Request;
 
 class BaseController
 {
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function index()
     {
-        global $request;
-        var_dump($request->getRouteParam('asd'));
+        var_dump($this->request->getParams());
         die();
-        view('welcome');
+        view('welcome',$data);
     }
 }
