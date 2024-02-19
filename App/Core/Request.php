@@ -64,4 +64,9 @@ class Request
     {
         header("Location:" . site_url($route));
     }
+
+    public function go()
+    {
+        return $_ENV['BASE_URL'].substr($this->uri,1);
+    }
 }
