@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Base;
 use App\Core\Request;
 
 class BaseController
@@ -9,12 +9,5 @@ class BaseController
     public function __construct(Request $request)
     {
         $this->request = $request;
-    }
-
-    public function index()
-    {
-        var_dump($this->request->getParams());
-        die();
-        view('welcome',$data);
     }
 }
