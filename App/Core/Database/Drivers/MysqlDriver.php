@@ -20,9 +20,9 @@ class MysqlDriver implements DatabaseInterface
         return $this->connection;
     }
 
-    public function find()
+    public function find($id)
     {
         $this->connect();
-        echo "hello from mysql";
+        $this->connection->prepare("SELECT * FROM users ORDER BY id ASC");
     }
 }
