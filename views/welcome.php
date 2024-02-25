@@ -6,6 +6,7 @@
     <title>lighty</title>
 </head>
 <body>
+    <?php echo($ok); ?>
     <h1>Hello from lighty !</h1>
 </body>
 </html>
