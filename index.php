@@ -11,3 +11,4 @@ App\Core\Database\Model::setDatabase($mysqlDriver);
 
 
 $router->handle();
+  

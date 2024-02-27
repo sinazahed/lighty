@@ -7,7 +7,7 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $users = User::find(1);
+        $users = User::find(1); // sample for findinf user
     }
 }
 
