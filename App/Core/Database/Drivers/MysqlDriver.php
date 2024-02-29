@@ -22,9 +22,10 @@ class MysqlDriver implements DatabaseInterface
 
     public function find($id, $table, $idColumn)
     {
-        echo "ok";
-        die();
         $this->connect();
-        $this->connection->prepare("SELECT * FROM {$table} WHERE {$idColumn} = {$id} ");
+        $stmt=$this->connection->prepare("SELECT * FROM {$table} WHERE {$idColumn} = {$id} ");
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
+
 }

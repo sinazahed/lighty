@@ -10,13 +10,6 @@ abstract class Model
     private $table;
     private $idColumn;
 
-    public function init()
-    {
-        die();
-        self::$table = self::getClassName();
-        self::$idColumn = self::getIdProperty();
-    }
-
     public static function setDatabase(DatabaseInterface $db) 
     {
         self::$db = $db;
@@ -24,12 +17,12 @@ abstract class Model
 
     public static function find($id) 
     {
-        return self::$db->find($id, self::$table, self::$idColumn);
+        return self::$db->find($id, static::$table, static::getIdProperty());
     }
 
     public static function create($data) 
     {
-        return self::$db->create($data, self::$table, self::$idColumn);
+        return self::$db->create($data, static::$table, static::getIdProperty());
     }
 
     public static function getClassName()
