@@ -28,4 +28,20 @@ class MysqlDriver implements DatabaseInterface
         return $stmt->fetchAll();
     }
 
+    public function delete($id, $table, $idColumn)
+    {
+        $this->connect();
+        $stmt = $this->connection->prepare("DELETE FROM $table WHERE $idColumn = :id");
+        return $stmt->execute();
+    }
+
+    public function create($table, $data)
+    {
+        $this->connect();
+        $keys = implode(', ', array_keys($data));
+        $values = ':' . implode(', :', array_keys($data));
+        $stmt = $this->connection->prepare("INSERT INTO $table ($keys) VALUES ($values)");  
+        return $stmt->execute();
+    }
+
 }

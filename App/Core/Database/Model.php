@@ -30,6 +30,11 @@ abstract class Model
         return substr(strrchr(static::class, '\\'),1) ?? static::$table ;
     }
 
+    // public function update()
+    // { 
+    //     return self::$db->update($data, static::$table)
+    // }
+
     public static function getIdProperty()
     {
         return  static::$id ?? 'id';
