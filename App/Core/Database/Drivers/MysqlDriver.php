@@ -7,7 +7,8 @@ class MysqlDriver implements DatabaseInterface
 {
     private $connection;
 
-    public function connect() {
+    public function connect() 
+    {
         if ($this->connection === null) {
             $dsn = "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']};charset=utf8mb4";
             $options = [
@@ -41,6 +42,22 @@ class MysqlDriver implements DatabaseInterface
         $keys = implode(', ', array_keys($data));
         $values = ':' . implode(', :', array_keys($data));
         $stmt = $this->connection->prepare("INSERT INTO $table ($keys) VALUES ($values)");  
+        return $stmt->execute();
+    }
+
+    public function update($table, $data, $idColumn, $id)
+    {
+        $this->connect();
+        $set = '';
+        foreach ($data as $key => $value) {
+            $set .= "$key = :$key, ";
+        }
+        $set = rtrim($set, ', ');
+        $stmt = $this->connection->prepare("UPDATE $table SET $set WHERE $idColumn = :id");
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(':' . $key, $value);
+        }
+        $stmt->bindValue(':id', $id);
         return $stmt->execute();
     }
 
